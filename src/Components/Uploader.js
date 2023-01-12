@@ -1,22 +1,48 @@
 import React from "react";
-import * as filestack from 'filestack-js';
-import useExternalScripts from "../hooks/useExternalScripts";
+import { Uploader as UploadUploader } from "uploader";
+import { UploadButton } from "react-uploader";
 
+const uploaderCon = UploadUploader({
+  apiKey: "public_kW15b2fDDcaFAtEF9H4LAeQUUQcp",
+}); // Your real API key.
 
 const Uploader = () => {
-    useExternalScripts("//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js");
-    const client = filestack.init(process.env.REACT_APP_FILESTACK_API_KEY);
-    client.picker().open();
-    return (
-        <div>
-            <h1>Welcome to the Uploader!</h1>
-            <ul>
-                <li>Home</li>
-                <li>View Gallery</li>
-                <li>Upload more images</li>
-            </ul>
-        </div>
-    )
-}
+  async function storeImage(file) {
+    const payload = {
+      filePath: file.filePath,
+      fileUrl: file.fileUrl,
+    };
 
-export default Uploader
+    await fetch("http://localhost:8000/record/add", {
+      //this is missing some info
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+        return;
+      });
+  }
+
+  return (
+    <div className="home">
+      <h1>Upload Photos</h1>
+      <UploadButton
+        uploader={uploaderCon}
+        options={{ multi: true }}
+        onComplete={(files) => storeImage(files[0])}
+      >
+        {({ onClick }) => <button onClick={onClick}>Upload a file...</button>}
+      </UploadButton>
+    </div>
+  );
+};
+
+export default Uploader;
