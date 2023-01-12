@@ -14,6 +14,8 @@ module.exports = {
       if (db) {
         _db = db.db("images");
         console.log("Successfully connected to MongoDB.");
+      } else {
+        console.log("Can't connect to MongoDB");
       }
       return callback(err);
     });
