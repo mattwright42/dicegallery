@@ -3,18 +3,17 @@ import { Uploader as UploadUploader } from "uploader";
 import { UploadButton } from "react-uploader";
 
 const uploaderCon = UploadUploader({
-  apiKey: "public_kW15b2fDDcaFAtEF9H4LAeQUUQcp",
-}); // Your real API key.
+  apiKey: process.env.REACT_APP_UPLOAD_API_KEY,
+});
 
 const Uploader = () => {
-  async function storeImage(file) {
+  function storeImage(file) {
     const payload = {
       filePath: file.filePath,
       fileUrl: file.fileUrl,
     };
 
-    await fetch("http://localhost:8000/record/add", {
-      //this is missing some info
+    fetch("http://localhost:8000/record/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +35,6 @@ const Uploader = () => {
       <h1>Upload Photos</h1>
       <UploadButton
         uploader={uploaderCon}
-        options={{ multi: true }}
         onComplete={(files) => storeImage(files[0])}
       >
         {({ onClick }) => <button onClick={onClick}>Upload a file...</button>}

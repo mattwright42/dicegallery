@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Gallery() {
   const [records, setRecords] = useState([]);
@@ -7,7 +8,7 @@ export default function Gallery() {
 
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:8000/record/`); //not sure what the url is here
+      const response = await fetch(`http://localhost:8000/record/`);
 
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
@@ -18,7 +19,6 @@ export default function Gallery() {
       const records = await response.json();
       setRecords(records);
     }
-
     getRecords();
     return;
   }, [records.length]);
@@ -32,6 +32,12 @@ export default function Gallery() {
           records.map((record) => {
             return <img src={record.fileUrl} width="200" height="200" />;
           })}
+        {records.length === 0 && (
+          <div>
+            There are no images to display;{" "}
+            <Link to="/uploader">go upload</Link> some cool images!
+          </div>
+        )}
       </div>
     </div>
   );

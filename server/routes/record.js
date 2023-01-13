@@ -39,6 +39,7 @@ recordRoutes.route("/record/add").post(function (req, response) {
   let myobj = {
     filePath: req.body.filePath,
     fileUrl: req.body.fileUrl,
+    createdAt: Date.now(),
   };
   db_connect.collection("records").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -52,9 +53,8 @@ recordRoutes.route("/update/:id").post(function (req, response) {
   let myquery = { _id: ObjectId(req.params.id) };
   let newvalues = {
     $set: {
-      name: req.body.name,
-      position: req.body.position,
-      level: req.body.level,
+      filePath: req.body.filePath,
+      fileUrl: req.body.fileUrl,
     },
   };
   db_connect
