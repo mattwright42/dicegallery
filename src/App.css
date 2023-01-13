@@ -12,13 +12,15 @@
 .navbar .links {
   margin-left: auto;
 }
-.navbar a, a {
+.navbar a,
+a {
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
   color: black;
 }
-.navbar a:hover, a:hover {
+.navbar a:hover,
+a:hover {
   color: #f1356d;
 }
 
@@ -26,6 +28,8 @@
   text-align: center;
 }
 
-.images-link, .upload-link {
+.images-link,
+.upload-link {
   margin-left: 0;
+  color: blue;
 }

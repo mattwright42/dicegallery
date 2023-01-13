@@ -33,9 +33,11 @@ export default function Gallery() {
             return <img src={record.fileUrl} width="200" height="200" />;
           })}
         {records.length === 0 && (
-          <div>
-            There are no images to display;{" "}
-            <Link to="/uploader">go upload</Link> some cool images!
+          <div className="home">
+            <p>There are no images to display!</p>
+            <p>
+              <Link to="/uploader">Go upload</Link>some cool images!
+            </p>
           </div>
         )}
       </div>
